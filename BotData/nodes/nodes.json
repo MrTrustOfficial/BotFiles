@@ -1,0 +1,393 @@
+{
+  "nodes": [
+    {
+      "type": "command",
+      "name": "ticket",
+      "guid": "16b59335-6ec8-46fa-997d-21051f09c16e",
+      "outputs": [
+        {
+          "label": "responses",
+          "connections": [
+            "651de6ac-62a7-444f-a9bf-d14ab40f5ee6",
+            "dd40dc46-630f-4336-8ec0-f03654f14710"
+          ]
+        }
+      ],
+      "inputs": [],
+      "x": 250,
+      "y": 250
+    },
+    {
+      "type": "response",
+      "name": "ticketChannelCreate",
+      "guid": "651de6ac-62a7-444f-a9bf-d14ab40f5ee6",
+      "reactionFields": [],
+      "embedfields": [],
+      "saveToVariable": "ticketChannel",
+      "saveToVariableType": "temp",
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": [
+            "59113c33-9700-45b2-8a24-b58726fb3703",
+            "352bff7a-8204-459b-be2e-945a362c88e3"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "16b59335-6ec8-46fa-997d-21051f09c16e"
+        }
+      ],
+      "x": 465,
+      "y": 127,
+      "rtype": "Channel Action",
+      "rsubtype": "Create Channel",
+      "formdata": [
+        "ticket_${dbsVars.CommandAuthor.displayName}",
+        "",
+        "",
+        "Text",
+        "ticketChannel",
+        "temp"
+      ],
+      "formnames": [
+        "channelname",
+        "chancategory",
+        "reason",
+        "channeltype",
+        "saveToVariable",
+        "saveToVariableType"
+      ],
+      "messageActionRows": [],
+      "valueFields": []
+    },
+    {
+      "type": "response",
+      "name": "disableEveryoneView",
+      "guid": "59113c33-9700-45b2-8a24-b58726fb3703",
+      "reactionFields": [],
+      "embedfields": [],
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": [
+            "cadaf2f4-3abb-4d11-bdc2-56d0aecc9418"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "651de6ac-62a7-444f-a9bf-d14ab40f5ee6"
+        }
+      ],
+      "x": 628,
+      "y": 307,
+      "rtype": "Channel Action",
+      "rsubtype": "Update Channel Permissions",
+      "formdata": [
+        "${tempVars.ticketChannel.id}",
+        "${dbsVars.guild.id}",
+        [
+          "VIEW_CHANNEL",
+          "SEND_MESSAGES"
+        ],
+        "Deny"
+      ],
+      "formnames": [
+        "channelName",
+        "permid",
+        "permissions",
+        "allow"
+      ],
+      "messageActionRows": [],
+      "valueFields": []
+    },
+    {
+      "type": "response",
+      "name": "enableTicketCreationView",
+      "guid": "cadaf2f4-3abb-4d11-bdc2-56d0aecc9418",
+      "reactionFields": [],
+      "embedfields": [],
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": [
+            "bc1014ce-c8cc-458c-b4a1-cc81af9702a3"
+          ]
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "59113c33-9700-45b2-8a24-b58726fb3703"
+        }
+      ],
+      "x": 956,
+      "y": 146,
+      "rtype": "Channel Action",
+      "rsubtype": "Update Channel Permissions",
+      "formdata": [
+        "${tempVars.ticketChannel.id}",
+        "${dbsVars.CommandAuthor.id}",
+        [
+          "VIEW_CHANNEL",
+          "SEND_MESSAGES"
+        ],
+        "Allow"
+      ],
+      "formnames": [
+        "channelName",
+        "permid",
+        "permissions",
+        "allow"
+      ],
+      "messageActionRows": [],
+      "valueFields": []
+    },
+    {
+      "type": "response",
+      "name": "ticketSettings",
+      "guid": "bc1014ce-c8cc-458c-b4a1-cc81af9702a3",
+      "reactionFields": [],
+      "embedfields": [],
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": []
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "cadaf2f4-3abb-4d11-bdc2-56d0aecc9418"
+        }
+      ],
+      "x": 1288,
+      "y": 207,
+      "rtype": "Message",
+      "rsubtype": "Send Embed",
+      "formdata": [
+        "${tempVars.ticketChannel.id}",
+        "FFFFFF",
+        "Ticket Settings",
+        "",
+        "${dbsVars.CommandAuthor.displayName}",
+        "",
+        "",
+        "Below are the ticket settings.",
+        "",
+        "",
+        "Powered by Ticket++",
+        "false",
+        "",
+        "temp"
+      ],
+      "formnames": [
+        "channelname",
+        "color",
+        "title",
+        "url",
+        "authorname",
+        "authorimageurl",
+        "authorlink",
+        "description",
+        "thumbnail",
+        "image",
+        "footer",
+        "timestamp",
+        "saveToVariable",
+        "saveToVariableType"
+      ],
+      "messageActionRows": [
+        {
+          "rowtype": "button",
+          "buttons": [
+            {
+              "label": "Close Ticket",
+              "customid": "closeTicket",
+              "style": "DANGER",
+              "emoji": "",
+              "URL": "",
+              "ephemeral": false
+            },
+            {
+              "label": "Ping Help",
+              "customid": "pingHelp",
+              "style": "SUCCESS",
+              "emoji": "",
+              "URL": "",
+              "ephemeral": false
+            }
+          ]
+        }
+      ],
+      "valueFields": []
+    },
+    {
+      "type": "response",
+      "name": "botView",
+      "guid": "352bff7a-8204-459b-be2e-945a362c88e3",
+      "reactionFields": [],
+      "embedfields": [],
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": []
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "651de6ac-62a7-444f-a9bf-d14ab40f5ee6"
+        }
+      ],
+      "x": 1205,
+      "y": 392,
+      "rtype": "Channel Action",
+      "rsubtype": "Update Channel Permissions",
+      "formdata": [
+        "${tempVars.ticketChannel.id}",
+        "1018447132077854750",
+        [
+          "ADMINISTRATOR"
+        ],
+        "Allow"
+      ],
+      "formnames": [
+        "channelName",
+        "permid",
+        "permissions",
+        "allow"
+      ],
+      "messageActionRows": [],
+      "valueFields": []
+    },
+    {
+      "type": "response",
+      "name": "deleteTicketRequestMessage",
+      "guid": "dd40dc46-630f-4336-8ec0-f03654f14710",
+      "reactionFields": [],
+      "embedfields": [],
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": []
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "16b59335-6ec8-46fa-997d-21051f09c16e"
+        }
+      ],
+      "x": 959,
+      "y": 318,
+      "rtype": "Message",
+      "rsubtype": "Delete Message",
+      "formdata": [
+        "${dbsVars.CommandMessage.id}",
+        "${dbsVars.CommandChannel.id}"
+      ],
+      "formnames": [
+        "varname",
+        "channelName"
+      ],
+      "messageActionRows": [],
+      "valueFields": []
+    },
+    {
+      "type": "command",
+      "name": "help",
+      "guid": "a1df2eff-de2c-4722-9945-69512be6eb40",
+      "outputs": [
+        {
+          "label": "responses",
+          "connections": [
+            "357604da-aa6c-40ea-9699-cb2e2c19522a"
+          ]
+        }
+      ],
+      "inputs": [],
+      "x": 253,
+      "y": 509
+    },
+    {
+      "type": "response",
+      "name": "helpEmbed",
+      "guid": "357604da-aa6c-40ea-9699-cb2e2c19522a",
+      "reactionFields": [],
+      "embedfields": [
+        {
+          "name": "What is my prefix?",
+          "value": "My prefix is: t",
+          "inline": "true"
+        },
+        {
+          "name": "What is the ticket command?",
+          "value": "tticket",
+          "inline": "true"
+        },
+        {
+          "name": "What is my help command?",
+          "value": "thelp",
+          "inline": "true"
+        }
+      ],
+      "saveToVariable": "",
+      "saveToVariableType": "temp",
+      "outputs": [
+        {
+          "label": "next response",
+          "connections": []
+        }
+      ],
+      "inputs": [
+        {
+          "label": "trigger",
+          "id": "a1df2eff-de2c-4722-9945-69512be6eb40"
+        }
+      ],
+      "x": 474,
+      "y": 516,
+      "rtype": "Message",
+      "rsubtype": "Send Embed",
+      "formdata": [
+        "${dbsVars.CommandChannel.id}",
+        "FFFFFF",
+        "Help Page",
+        "",
+        "${dbsVars.CommandAuthor.displayName}",
+        "",
+        "",
+        "I'm quite a simple bot and have few commands. \nBut those commands can do alot of things, you won't find a ticket bot as good as me!",
+        "",
+        "",
+        "Powered by Ticket++",
+        "false",
+        "",
+        "temp"
+      ],
+      "formnames": [
+        "channelname",
+        "color",
+        "title",
+        "url",
+        "authorname",
+        "authorimageurl",
+        "authorlink",
+        "description",
+        "thumbnail",
+        "image",
+        "footer",
+        "timestamp",
+        "saveToVariable",
+        "saveToVariableType"
+      ],
+      "messageActionRows": [],
+      "valueFields": []
+    }
+  ]
+}

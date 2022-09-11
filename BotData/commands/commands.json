@@ -1,0 +1,151 @@
+{
+  "command": [
+    {
+      "name": "ticket",
+      "actions": [
+        {
+          "name": "ticketChannelCreate",
+          "category": "Channel Action",
+          "type": "Create Channel",
+          "messageActionRows": [],
+          "channelname": "ticket_${dbsVars.CommandAuthor.displayName}",
+          "chancategory": "",
+          "reason": "",
+          "channeltype": "Text",
+          "savetovariable": "ticketChannel",
+          "savetovariabletype": "temp"
+        },
+        {
+          "name": "deleteTicketRequestMessage",
+          "category": "Message",
+          "type": "Delete Message",
+          "messageActionRows": [],
+          "varname": "${dbsVars.CommandMessage.id}",
+          "channelname": "${dbsVars.CommandChannel.id}"
+        },
+        {
+          "name": "disableEveryoneView",
+          "category": "Channel Action",
+          "type": "Update Channel Permissions",
+          "messageActionRows": [],
+          "channelname": "${tempVars.ticketChannel.id}",
+          "permid": "${dbsVars.guild.id}",
+          "permissions": [
+            "VIEW_CHANNEL",
+            "SEND_MESSAGES"
+          ],
+          "allow": "Deny"
+        },
+        {
+          "name": "botView",
+          "category": "Channel Action",
+          "type": "Update Channel Permissions",
+          "messageActionRows": [],
+          "channelname": "${tempVars.ticketChannel.id}",
+          "permid": "1018447132077854750",
+          "permissions": [
+            "ADMINISTRATOR"
+          ],
+          "allow": "Allow"
+        },
+        {
+          "name": "enableTicketCreationView",
+          "category": "Channel Action",
+          "type": "Update Channel Permissions",
+          "messageActionRows": [],
+          "channelname": "${tempVars.ticketChannel.id}",
+          "permid": "${dbsVars.CommandAuthor.id}",
+          "permissions": [
+            "VIEW_CHANNEL",
+            "SEND_MESSAGES"
+          ],
+          "allow": "Allow"
+        },
+        {
+          "name": "ticketSettings",
+          "category": "Message",
+          "type": "Send Embed",
+          "messageActionRows": [
+            {
+              "rowtype": "button",
+              "buttons": [
+                {
+                  "label": "Close Ticket",
+                  "customid": "closeTicket",
+                  "style": "DANGER",
+                  "emoji": "",
+                  "URL": "",
+                  "ephemeral": false
+                },
+                {
+                  "label": "Ping Help",
+                  "customid": "pingHelp",
+                  "style": "SUCCESS",
+                  "emoji": "",
+                  "URL": "",
+                  "ephemeral": false
+                }
+              ]
+            }
+          ],
+          "channelname": "${tempVars.ticketChannel.id}",
+          "color": "FFFFFF",
+          "title": "Ticket Settings",
+          "url": "",
+          "authorname": "${dbsVars.CommandAuthor.displayName}",
+          "authorimageurl": "",
+          "authorlink": "",
+          "description": "Below are the ticket settings.",
+          "thumbnail": "",
+          "image": "",
+          "footer": "Powered by Ticket++",
+          "timestamp": "false",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    },
+    {
+      "name": "help",
+      "actions": [
+        {
+          "name": "helpEmbed",
+          "category": "Message",
+          "type": "Send Embed",
+          "fields": [
+            {
+              "name": "What is my prefix?",
+              "value": "My prefix is: t",
+              "inline": "true"
+            },
+            {
+              "name": "What is the ticket command?",
+              "value": "tticket",
+              "inline": "true"
+            },
+            {
+              "name": "What is my help command?",
+              "value": "thelp",
+              "inline": "true"
+            }
+          ],
+          "messageActionRows": [],
+          "channelname": "${dbsVars.CommandChannel.id}",
+          "color": "FFFFFF",
+          "title": "Help Page",
+          "url": "",
+          "authorname": "${dbsVars.CommandAuthor.displayName}",
+          "authorimageurl": "",
+          "authorlink": "",
+          "description": "I'm quite a simple bot and have few commands. \nBut those commands can do alot of things, you won't find a ticket bot as good as me!",
+          "thumbnail": "",
+          "image": "",
+          "footer": "Powered by Ticket++",
+          "timestamp": "false",
+          "savetovariable": "",
+          "savetovariabletype": "temp"
+        }
+      ]
+    }
+  ]
+}
